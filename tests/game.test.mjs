@@ -127,3 +127,20 @@ test("keeps the starter preview removed from the product", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
   assert.doesNotMatch(page + layout, /codex-preview|_sites-preview/);
 });
+
+test("builds a GitHub Pages artifact with the repository base path", async () => {
+  const [html, packageJson, workflow] = await Promise.all([
+    readFile(new URL("../dist-pages/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(
+      new URL("../.github/workflows/deploy-pages.yml", import.meta.url),
+      "utf8",
+    ),
+  ]);
+
+  assert.match(html, /\/midnight-grid-game\/assets\//);
+  assert.match(packageJson, /"build:pages": "vite build --config vite\.pages\.config\.ts"/);
+  assert.match(workflow, /actions\/upload-pages-artifact@v4/);
+  assert.match(workflow, /actions\/deploy-pages@v4/);
+  assert.match(workflow, /path: dist-pages/);
+});

@@ -24,6 +24,15 @@ Open `http://localhost:3000`.
 
 Touch controls appear automatically on smaller screens.
 
+## Hosted game
+
+The production game is deployed to GitHub Pages from `main`:
+
+<https://kaushik27.github.io/midnight-grid-game/>
+
+The deployment workflow builds a static Vite entry point while keeping the
+existing Vinext development and server build intact.
+
 ## Verify
 
 ```bash
@@ -41,4 +50,6 @@ deterministic effects, and removal of starter UI.
 - `app/MidnightGridGame.tsx`: renderer, simulation, AI, audio, UI, and controls
 - `app/game-core.mjs`: deterministic geometry and mission helpers
 - `app/globals.css`: responsive game shell and overlays
+- `site/main.tsx`: static GitHub Pages entry point
+- `.github/workflows/deploy-pages.yml`: Pages build and deployment
 - `tests/game.test.mjs`: logic and production-shell tests
